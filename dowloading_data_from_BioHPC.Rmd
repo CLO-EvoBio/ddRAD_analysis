@@ -1,0 +1,116 @@
+---
+title: "Download_Data"
+output: github_document
+---
+
+Data can be downloaded into the /home directory at BioHPC without a reservation, *BUT* remember that you cannot compute here!
+
+# Login to BioHPC
+
+```{bash, eval = FALSE}
+ssh <USER_NAME>@cbsulogin.biohpc.cornell.edu 
+```
+
+replace `<USERNAME>` with your own bioHPC username use your biohpc password (this may not be the same as your cornell netid password)
+
+create a folder for your raw data
+
+```{bash, eval = FALSE}
+mkdir EXPERIMENT_RAWDATA #note no spaces in the drectory name
+```
+
+# Download your Illumina sequencing data from the BRC.
+
+You should have received an email forwarded from Bronwyn containing your data. This email should have an attachment called "download.sh" This is a bash script that will run the wget command to fetch your data from the core facility and copy it to the directory in which you run this script.
+
+First Open the script in your text editor (e.g. sublime) It should look something like this.
+
+```{bash, eval = FALSE}
+!/bin/bash
+wget -q -c -O 12063_3270_127033_H3J2HBGXH_owl1_ATCACG_R1.fastq.gz "http://cbsuapps.biohpc.cornell.edu/Sequencing/showseqfile.aspx?mode=http&cntrl=673407425&refid=822342"
+wget -q -c -O 12063_3270_127033_H3J2HBGXH_owl1_ATCACG_R2.fastq.gz "http://cbsuapps.biohpc.cornell.edu/Sequencing/showseqfile.aspx?mode=http&cntrl=429994818&refid=822343"
+wget -q -c -O 12063_3270_127034_H3J2HBGXH_owl2_CGATGT_R1.fastq.gz "http://cbsuapps.biohpc.cornell.edu/Sequencing/showseqfile.aspx?mode=http&cntrl=810767335&refid=822344"
+wget -q -c -O 12063_3270_127034_H3J2HBGXH_owl2_CGATGT_R2.fastq.gz "http://cbsuapps.biohpc.cornell.edu/Sequencing/showseqfile.aspx?mode=http&cntrl=1853097718&refid=822345"
+```
+
+If you shared a sequencing lane with another project delete any lines that do not correspond to your data. Save the script on your machine in a location that you can easily find.
+
+[**How to get this script on the cluster so that you can run it:**]{.underline}
+
+Open Filezilla. In the boxes along the top enter the following:
+
+-   host: cbsulogin.biohpc.cornell.edu ( or replace with the name of the computer you reserved)
+
+-   Username: your biohpc username
+
+-   password: your biohpc password port: 22
+
+click "quickconnect" If this is the first time that you are connecting you will be asked to trust this connection.
+
+If successful, you'll now see your computer on the left and the cluster on the right. On the cluster you will see that you are in a storage group called `lc736_0001`. You'll find a directory with your username in this folder. On the left-hand side navigate on your computer to the folder that contains your login script and on the right-hand side navigate into the folder on the cluster where you want your raw data to end up. Drag the download script from your computer to the appropriate directory on the cluster.
+
+Leave Filezilla and go back to terminal.
+
+Navigate to the correct directory (use the `cd` command and `pwd` to check where you are) and check that you see the download script in the correct directory (use the `ls` command)
+
+Once you are in the directory with the download script you can run the script.
+
+```{bash, eval = FALSE}
+bash download.sh &
+```
+
+(note: bash is the program that will run the script and the "&" allows it to be run in the background, thereby giving you control of your cursor and the ability to do other things while it is running.)
+
+To check whether the download script is running you can use the program `tophat` to see what processes are running on your machine. simply type:
+
+```{bash, eval = FALSE}
+top 
+```
+
+This will bring up a table showing you the processes that are running and the resources being used. you should see "wget" running if the download takes a while.
+
+type `q` to quit `tophat`.
+
+Check that the data is showing up in the correct directory (use the `ls` command)
+
+Finally check that the size of the files is correct (i.e. that all the data was downloaded) by using the `ls -l` command and check that the file size is the same as that in the email with the data.
+
+To exit the teminal type
+
+```{bash, eval = FALSE}
+exit
+```
+
+# Some useful commands to use in linux:
+
+`cd` (change directory)
+
+`cd ..` (change to parent directory - ie. one level up)
+
+`cp` (copy)
+
+`cp –R` (copy everything in a directory)
+
+`mkdir` ( make a directory)
+
+`rm` (remove)
+
+`rm -R` (remove a directory and all it's contents)
+
+`ls` (list contents of directory)
+
+`ls -l` (list contents and properties of a directory)
+
+`mv` (move)
+
+`pwd` (print working directory - lists where you currently are)
+
+`exit` - exit from terminal
+
+*What do you do if you need to stop a process from running?*
+
+`kill -9 <PID>` (replace <PID> with the process ID of the process you want to kill) you will find the PID using top/htop (see below). This will kill specific processes based on their PID
+
+`killall <process name>` (kills all processes with a particular name)
+
+`kill -u <username>` (kills all processes running for that user and logs off)
