@@ -1,0 +1,101 @@
+Demultiplex data
+================
+
+**prepare index.txt files**
+
+Get the barcode sequences from the adapter seq file
+(./scripts/adaptor_seq_for_demultiplex.xls)
+
+Index files must be tab separated list of barcode <tab> sample name
+
+See example index file /.scripts/Example_index1.txt
+
+|         |          |
+|:--------|:---------|
+| ATCACG  | sample1  |
+| CGATGT  | sample2  |
+| TTAGGC  | sample3  |
+| TGACCA  | sample4  |
+| ACAGTG  | sample5  |
+| GCCAAT  | sample6  |
+| CTTGA   | sample7  |
+| TCACC   | sample8  |
+| CTAGC   | sample9  |
+| ACAAA   | sample10 |
+| AGCCC   | sample11 |
+| GTATT   | sample12 |
+| CTGTA   | sample13 |
+| AGCAT   | sample14 |
+| ACTAT   | sample15 |
+| CTTGCTT | sample16 |
+| ATGAAAC | sample17 |
+| AAAAGTT | sample18 |
+| GAATTCA | sample19 |
+| GGACCTA | sample20 |
+
+make 1 file for each index: index1.txt, index2.txt, index3.txt,
+index4.txt, index5.txt
+
+**use STACKS function `process_radtags` to demultiplex data**
+
+Check on the version of stacks 2 that is currently installed on the
+cluster and add that to the PATH using the commands shown here:
+<https://biohpc.cornell.edu//lab/userguide.aspx?a=software&i=454#c>
+
+``` r
+# First specify the library path and path to stacks-2.59:
+
+export LD_LIBRARY_PATH=/usr/local/gcc-7.3.0/lib64:/usr/local/gcc-7.3.0/lib
+
+export PATH=/programs/stacks-2.59/bin:$PATH
+```
+
+*Note: you will need to run these lines each time to login to the
+terminal.*
+
+Information about process_radtags:
+<https://catchenlab.life.illinois.edu/stacks/comp/process_radtags.php>
+
+prepare demultiplex.sh script
+
+    mkdir ./FILENAME1raw
+    mkdir ./FILENAME2raw
+    mkdir ./FILENAME3raw
+
+    mv ./FILENAME1_tff.fastq ./FILENAME1raw/FILENAME1_tff.fastq
+    mv ./FILENAME2_tff.fastq ./FILENAME2raw/FILENAME2_tff.fastq
+    mv ./FILENAME3_tff.fastq ./FILENAME3raw/FILENAME3_tff.fastq
+
+    mkdir demultfilter
+
+    process_radtags -p ./FILENAME1raw -b ./index1.txt -o ./demultfilter -e sbfI -c -q -E phred33 --inline_null -i fastq --adapter_1 GATCGGAAGAGCACACGTCTGAACTCCAGTCACATCACGATCTCGTATGCCGTCTTCTGCTTG --adapter_mm 1 --filter_illumina
+    process_radtags -p ./FILENAME2raw -b ./index2.txt -o ./demultfilter -e sbfI -c -q -E phred33 --inline_null -i fastq --adapter_1 GATCGGAAGAGCACACGTCTGAACTCCAGTCACCGATGTATCTCGTATGCCGTCTTCTGCTTG --adapter_mm 1 --filter_illumina
+    process_radtags -p ./FILENAME3raw -b ./index3.txt -o ./demultfilter -e sbfI -c -q -E phred33 --inline_null -i fastq --adapter_1 GATCGGAAGAGCACACGTCTGAACTCCAGTCACTTAGGCATCTCGTATGCCGTCTTCTGCTTG --adapter_mm 1 --filter_illumina
+
+Note: the adapter_1 sequence is different for each index. You can get
+sequences for all the indexes in this [example demultiplex
+script](./scripts/demultiplex_index1_to_index27.sh)
+
+Move the demutliplex.sh and index files to the working directory and run
+using bash.
+
+``` r
+nohup bash demultiplex_AS_LDM.sh &
+```
+
+Look at how many reads are in each sample. This information can be found
+in the process_radtags log files, but instead of having to open each of
+these I just run the wordcount function in linux
+
+``` r
+wc -l *.fq
+```
+
+This counts the lines in the .fq files and outputs to the terminal. Just
+wait for it to finish.
+
+Copy the output, paste into excel, convert text to columns, and divide
+the \#lines by 4 = \#reads.
+
+You can use this information to evaluate if there are samples that have
+failed and should be left out of downstream analysis.
