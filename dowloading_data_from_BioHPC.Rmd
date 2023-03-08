@@ -1,5 +1,5 @@
 ---
-title: "Download_Data"
+title: "Download Data from BRC"
 output: github_document
 ---
 
@@ -60,6 +60,10 @@ bash download.sh &
 ```
 
 (note: bash is the program that will run the script and the "&" allows it to be run in the background, thereby giving you control of your cursor and the ability to do other things while it is running.)
+
+*When using &, you'll see the bash job ID in brackets, and the process ID (PID) listed after. For example: [1] 25132*
+
+*You can use the PID to terminate the process prematurely. For instance, to send it the TERM (terminate) signal with the kill command: kill -9 25132*
 
 To check whether the download script is running you can use the program `tophat` to see what processes are running on your machine. simply type:
 
