@@ -62,7 +62,7 @@ Note: the adapter_1 sequence is different for each index. You can get sequences 
 Move the demutliplex.sh and index files to the working directory and run using bash. 
 
 ```{r, eval=FALSE}
-nohup bash demultiplex_AS_LDM.sh &
+nohup bash demultiplex.sh &
 ```
 
 Look at how many reads are in each sample. This information can be found in the process_radtags log files, but instead of having to open each of these I just run the wordcount function in linux

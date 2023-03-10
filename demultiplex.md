@@ -80,7 +80,7 @@ Move the demutliplex.sh and index files to the working directory and run
 using bash.
 
 ``` r
-nohup bash demultiplex_AS_LDM.sh &
+nohup bash demultiplex.sh &
 ```
 
 Look at how many reads are in each sample. This information can be found
