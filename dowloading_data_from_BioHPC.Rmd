@@ -1,6 +1,6 @@
 ---
 title: "Download Data from BRC"
-output: github_document
+output: html_document
 ---
 
 Data can be downloaded into the /home directory at BioHPC without a reservation, *BUT* remember that you cannot compute here!
@@ -39,7 +39,7 @@ If you shared a sequencing lane with another project delete any lines that do no
 
 Open Filezilla. In the boxes along the top enter the following:
 
--   host: cbsulogin.biohpc.cornell.edu ( or replace with the name of the computer you reserved)
+-   host: cbsulogin.biohpc.cornell.edu (or replace with the name of the computer you reserved)
 
 -   Username: your biohpc username
 

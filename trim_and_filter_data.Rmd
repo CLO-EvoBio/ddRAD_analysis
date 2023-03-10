@@ -50,7 +50,7 @@ We will use the `fastx_trimmer` and `fastq_quality_filter` functions from the `F
 We will first need to unzip the data. 
 
 ```{r, eval=FALSE}
-gunzip \*.gz &
+gunzip *.gz &
 ```
 
 Create a script (trimfilter.sh, see example below) so that all steps can be completed without much user input.
@@ -69,7 +69,9 @@ fastx_trimmer -f 1 -l 147 -Q33 -i FILENAME3.fastq -o FILENAME3_t.fastq
 ##Eliminate sequences where there is a sinlge Phred score below 10 and then sequences where 5% of reads have a with Phred quality scores below 20 
 
 #100% of the bases in a sequence must have a score of higher than 10 for the sequence to be kept 
-fastq_quality_filter -q 10 -p 100 -Q33 -i FILENAME1_t.fastq -o FILENAME1_tf.fastq & fastq_quality_filter -q 10 -p 100 -Q33 -i FILENAME2_t.fastq -o FILENAME2_tf.fastq & fastq_quality_filter -q 10 -p 100 -Q33 -i FILENAME3_t.fastq -o FILENAME3_tf.fastq 
+fastq_quality_filter -q 10 -p 100 -Q33 -i FILENAME1_t.fastq -o FILENAME1_tf.fastq &
+fastq_quality_filter -q 10 -p 100 -Q33 -i FILENAME2_t.fastq -o FILENAME2_tf.fastq &
+fastq_quality_filter -q 10 -p 100 -Q33 -i FILENAME3_t.fastq -o FILENAME3_tf.fastq 
 
 #95% of the bases in a sequence must have a score of more than 20 for the sequence to be kept 
 fastq_quality_filter -q 20 -p 95 -Q33 -i FILENAME1_tf.fastq -o FILENAME1_tff.fastq & 
