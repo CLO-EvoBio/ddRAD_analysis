@@ -8,21 +8,21 @@ our computing. For ddRAD analysis we can use the general machines
 (cheapest, but there are only 2 available and so they are often hard to
 get) or the medium gen1 machines. Connect to this machine:
 
-``` r
+``` bash
 ssh USER_NAME@MACHINE_NAME.biohpc.cornell.edu
 ```
 
 **navigate to the working directory and make directory for the
 analysis**
 
-``` r
+``` bash
 cd /workdir
 mkdir /workdir/USER_NAME
 ```
 
 **copy data from your home directory to the the working directory**
 
-``` r
+``` bash
 cp /home/USER_NAME/RAW_DATA/*.gz /workdir/USER_NAME &
 ```
 
@@ -46,7 +46,7 @@ You will need to transfer this script file to /workdir on the cluster
 using Filezilla. Make sure that the script is in the same directory as
 the data. Run the script.
 
-``` r
+``` bash
 bash fastqc.sh &
 ```
 
@@ -61,8 +61,8 @@ data for the STACKS analysis.
 
 We will first need to unzip the data.
 
-``` r
-gunzip \*.gz &
+``` bash
+gunzip *.gz &
 ```
 
 Create a script (trimfilter.sh, see example below) so that all steps can
@@ -81,7 +81,9 @@ be completed without much user input.
     ##Eliminate sequences where there is a sinlge Phred score below 10 and then sequences where 5% of reads have a with Phred quality scores below 20 
 
     #100% of the bases in a sequence must have a score of higher than 10 for the sequence to be kept 
-    fastq_quality_filter -q 10 -p 100 -Q33 -i FILENAME1_t.fastq -o FILENAME1_tf.fastq & fastq_quality_filter -q 10 -p 100 -Q33 -i FILENAME2_t.fastq -o FILENAME2_tf.fastq & fastq_quality_filter -q 10 -p 100 -Q33 -i FILENAME3_t.fastq -o FILENAME3_tf.fastq 
+    fastq_quality_filter -q 10 -p 100 -Q33 -i FILENAME1_t.fastq -o FILENAME1_tf.fastq &
+    fastq_quality_filter -q 10 -p 100 -Q33 -i FILENAME2_t.fastq -o FILENAME2_tf.fastq &
+    fastq_quality_filter -q 10 -p 100 -Q33 -i FILENAME3_t.fastq -o FILENAME3_tf.fastq 
 
     #95% of the bases in a sequence must have a score of more than 20 for the sequence to be kept 
     fastq_quality_filter -q 20 -p 95 -Q33 -i FILENAME1_tf.fastq -o FILENAME1_tff.fastq & 
@@ -92,7 +94,7 @@ be completed without much user input.
 
 Transfer this script to the /workdir and run the script
 
-``` r
+``` bash
 nohup bash trimfilter.sh &
 ```
 

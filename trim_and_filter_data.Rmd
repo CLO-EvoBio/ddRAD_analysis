@@ -7,18 +7,18 @@ output: github_document
 
 In order to compute we will need to reserve a machine at the BioHPC for our computing. For ddRAD analysis we can use the general machines (cheapest, but there are only 2 available and so they are often hard to get) or the medium gen1 machines. Connect to this machine:
 
-```{r, eval = FALSE}
+```{bash, eval = FALSE}
 ssh USER_NAME@MACHINE_NAME.biohpc.cornell.edu
 ```
 
 **navigate to the working directory and make directory for the analysis** 
-```{r, eval = FALSE}
+```{bash, eval = FALSE}
 cd /workdir
 mkdir /workdir/USER_NAME
 ```
 
 **copy data from your home directory to the the working directory**
-```{r, eval = FALSE}
+```{bash, eval = FALSE}
 cp /home/USER_NAME/RAW_DATA/*.gz /workdir/USER_NAME &
 ```
 
@@ -37,7 +37,7 @@ fastqc FILENAME3.fastq.gz
 ```
 You will need to transfer this script file to /workdir on the cluster using Filezilla. Make sure that the script is in the same directory as the data. Run the script.
 
-```{r, eval=FALSE}
+```{bash, eval=FALSE}
 bash fastqc.sh &
 ```
 
@@ -49,7 +49,7 @@ We will use the `fastx_trimmer` and `fastq_quality_filter` functions from the `F
 
 We will first need to unzip the data. 
 
-```{r, eval=FALSE}
+```{bash, eval=FALSE}
 gunzip *.gz &
 ```
 
@@ -81,7 +81,7 @@ fastq_quality_filter -q 20 -p 95 -Q33 -i FILENAME3_tf.fastq -o FILENAME3_tff.fas
 #label of "tff" indicates that the second round of quality filtering is completed
 ```
 Transfer this script to the /workdir and run the script
-```{r, eval=FALSE}
+```{bash, eval=FALSE}
 nohup bash trimfilter.sh &
 ```
 
