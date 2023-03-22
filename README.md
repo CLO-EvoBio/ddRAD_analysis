@@ -8,6 +8,4 @@ Here are the steps (there are different markdown (.md) files for each):
 2. [Check quality of data and trim and filter data](./trim_and_filter_data.md)
 3. [Demultiplex data](./demultiplex.md)
 4. [Stacks analysis - Denovo (when no reference is available)](./denovo.md)
-=======
-1. [Download the data from the BioHPC](./dowloading_data_from_BioHPC.md)
->>>>>>> ca912e13a5ca58451bd0f7e095ac770c891f3e2b
+
