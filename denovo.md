@@ -1,7 +1,7 @@
 Denovo Alignment
 ================
 
-# DENOVO Alignement
+# Denovo Alignment
 
 - information on STACKS can be found here:
   <http://catchenlab.life.illinois.edu/stacks/>
@@ -141,7 +141,7 @@ mkdir denovo_final
 cd denovo_final 
 ```
 
-*remember if you have logged in for a new session you will need to run
+*Remember if you have logged in for a new session you will need to run
 the commands to add Stacks 2 to your path again.*
 
 Run the denovo pipeline with all of your samples and your chosen M/n

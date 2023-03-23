@@ -3,7 +3,7 @@ title: "Denovo Alignment"
 output: github_document
 ---
 
-# DENOVO Alignement #
+# Denovo Alignment #
 
 -   information on STACKS can be found here: http://catchenlab.life.illinois.edu/stacks/
 
